@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Menu E-Cafe</title>
 
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo center">E-Cafe</a>
+        <ul class="left hide-on-med-and-down">
+          <li><a href="#"><i class="material-icons left">menu</i>Kategori</a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#"><i class="material-icons left">shopping_cart</i>Keranjang</a></li>
+        </ul>
+  
+        <!-- <ul class="left hide-on-med-and-up">
+          <li><a href="#"><i class="material-icons">menu</i></a></li>
+        </ul> -->
+        <ul class="right hide-on-med-and-up">
+          <li><a href="#"><i class="material-icons">shopping_cart</i></a></li>
+        </ul>
+
+        
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav> 
+  </div>
+  
+  <ul id="nav-mobile" class="sidenav collection with-header">
+    <div class="container">
+      <li class="collection-header"><h4>Kategori</h4></li>
+      <a href="#!" class="collection-item active">Menu Favorit</a>
+      <a href="#!" class="collection-item">Makanan Utama</a>
+      <a href="#!" class="collection-item">Minuman</a>
+      <a href="#!" class="collection-item">Dessert</a>
+    </div>
+  </ul>
+
+  <div class="section no-padding" id="index-banner">
+    <div class="container">
+      <h4 class="header" style="font-weight: bold;">Menu Favorit</h4>
+      <div class="row">
+        <div class="col s12 m6 offset-m3">
+          <div class="carousel carousel-slider center">
+              <div class="carousel-item" href="#one!">
+                <div class="card">
+                  <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="images/Dessert/macaron.jpg">
+                    <span class="card-title black-text grey lighten-4" style="font-weight: 400; opacity: 70%;">Macaron</span>
+                  </div>
+                  <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Macaron<i class="material-icons right">close</i></span>
+                    <p>Kue Dari Prancis</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item" href="#two!">
+                <div class="card">
+                  <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="images/Dessert/sundae.jpg">
+                    <span class="card-title black-text grey lighten-4" style="font-weight: 400; opacity: 70%;">Sundae Choco</span>
+                  </div>
+                  <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Sundae<i class="material-icons right">close</i></span>
+                    <p>Makanan penutup yang manis dan dilapisi dengan cokelat lezat</p>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="carousel-item" href="#three!">
+                <div class="card">
+                  <div class="card-image">
+                    <img src="images/Dessert/macaron.jpg">
+                    <span class="card-title black-text grey lighten-4" style="font-weight: 400; opacity: 70%;">Macaron</span>
+                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                  </div>
+                  <div class="card-content">
+                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item" href="#four!">
+                <div class="card">
+                  <div class="card-image">
+                    <img src="images/Dessert/macaron.jpg">
+                    <span class="card-title black-text grey lighten-4" style="font-weight: 400; opacity: 70%;">Macaron</span>
+                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                  </div>
+                  <div class="card-content">
+                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section no-pad-top">
+    <div class="container">
+      <h5 class="header" style="font-weight: bold;">Makanan Utama</h5>
+    </div>
+  </div>
+
+  <div class="section no-pad-top">
+    <div class="container">
+      <h5 class="header" style="font-weight: bold;">Minuman</h5>
+    </div>
+  </div>
+
+  <div class="section no-pad-top">
+    <div class="container">
+      <h5 class="header" style="font-weight: bold;">Dessert</h5>
+    </div>
+  </div>
+<!-- 
+  <div class="container">
+    <div class="section"> -->
+
+      <!--   Icon Section   -->
+      <!-- <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">Speeds up development</h5>
+
+            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">User Experience Focused</h5>
+
+            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Easy to work with</h5>
+
+            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br><br>
+  </div> -->
+
+  <footer class="page-footer orange">
+    <div class="footer-copyright">
+      <div class="container">
+      Dibuat oleh <a class="orange-text text-lighten-3" href="#">Tim Rebahan</a>, Copyright &copy; 2020
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script>
+    $('.carousel.carousel-slider').carousel({
+      fullWidth: true,
+      indicators: true
+    });
+  </script>
+
+  </body>
+</html>
