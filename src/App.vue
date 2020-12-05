@@ -1,14 +1,19 @@
 <template>
-  <Navbar/>
+  <div class="container">
+    <Navbar/>
+    <SearchBox/>
+  </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar'
+import SearchBox from './components/SearchBox'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    SearchBox,
   }
 }
 </script>
@@ -20,6 +25,6 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background: whitesmoke;
 }
 </style>
