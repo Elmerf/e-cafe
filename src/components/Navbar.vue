@@ -41,7 +41,7 @@ a, button {
   font-family: 'Comfortaa', cursive;
   font-weight: 700;
   font-size: 16px;
-  color: #f9feff;
+  color: black;
   text-decoration: none;
 }
 
@@ -53,8 +53,8 @@ header {
 }
 
 button {
-  padding: 9px 25px;
-  background-color: rgba(0, 136, 169, 1);
+  padding: 15px 25px;
+  background-color: rgba(253,184,21,1);
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -62,7 +62,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 136, 169, 0.8);
+  background-color: rgba(253,184,21,0.8);
 }
 
 .logo {

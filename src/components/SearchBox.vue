@@ -31,7 +31,7 @@ form{
     background: white;
     box-sizing: border-box;
     border-radius: 25px;
-    border: 4px solid black;
+    border: 4px solid rgb(253,184,21);
     padding: 5px;
 }
 
@@ -75,7 +75,7 @@ form:hover input{
 }
 
 form:hover .fa{
-    background: #07051a;
+    background: rgb(253,184,21);
     color: white;
 }
 </style>
