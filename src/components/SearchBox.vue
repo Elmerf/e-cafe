@@ -17,14 +17,14 @@ export default {
 .container {
     display: flex;
     flex-direction: column;
-    padding: 20px 10%;
+    padding: 0 10%;
 }
 
 form{
     position: relative;
-    top: 50%;
+    /* top: 50%; */
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, 0);
     transition: all 1s;
     width: 50px;
     height: 50px;

@@ -1,71 +1,23 @@
 <template>
   <header>
-    <h1 class="logo">E-Café Menu</h1>
-    <h2 :style="[isMobile ? 'display: none' : 'display: flex']">Selamat Datang! Mau pesan apa kali ini?</h2>
-    <a class="purchase" href="#">
-      <button>Pembayaran </button>
-    </a>
+    <h2 class="logo">E-Café Menu</h2>
   </header>
 </template>
 
 <script>
 export default {
   name: 'Navbar',
-  data() {
-    return {
-      isMobile: false
-    }
-  },
-  methods: {
-    handleResize() {
-      this.isMobile = window.matchMedia('(max-width: 600px)').matches
-      ? true : false 
-    }
-  },
-  mounted() {
-    this.handleResize()
-    window.addEventListener('resize', this.handleResize)
-  },
-  unmounted(){
-    window.removeEventListener('resize', this.handleResize)
-  }
 }
 </script>
 
-<style scoped> 
-h1, h2 {
-  font-family: 'Comfortaa', cursive;
-}
-
-a, button {
-  font-family: 'Comfortaa', cursive;
-  font-weight: 700;
-  font-size: 16px;
-  color: black;
-  text-decoration: none;
-}
-
+<style> 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 10%;
-}
-
-button {
-  padding: 15px 25px;
-  background-color: rgba(253,184,21,1);
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
-}
-
-button:hover {
-  background-color: rgba(253,184,21,0.8);
+  text-align: center;
+  padding: 10px 0;
+  background-color: rgb(253,184,21);
 }
 
 .logo {
-  cursor: pointer;
+  background-color: rgb(253,184,21);
 }
 </style>

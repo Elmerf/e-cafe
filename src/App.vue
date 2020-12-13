@@ -1,19 +1,19 @@
 <template>
   <div class="container">
     <Navbar/>
-    <SearchBox/>
+    <MenuItem/>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar'
-import SearchBox from './components/SearchBox'
+import MenuItem from './components/MenuItem'
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    SearchBox,
+    MenuItem,
   }
 }
 </script>
@@ -26,5 +26,9 @@ export default {
   margin: 0;
   padding: 0;
   background: whitesmoke;
+}
+
+body {
+  font-family: 'Comfortaa', cursive;
 }
 </style>
