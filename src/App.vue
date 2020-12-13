@@ -1,25 +1,25 @@
 <template>
   <div class="container">
     <Navbar/>
-    <MenuItem/>
+    <RecommendedItem/>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar'
-import MenuItem from './components/MenuItem'
+import RecommendedItem from './components/RecommendedItem'
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    MenuItem,
+    RecommendedItem,
   }
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa');
 
 * {
   box-sizing: border-box;
