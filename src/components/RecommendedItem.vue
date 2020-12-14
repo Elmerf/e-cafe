@@ -6,10 +6,11 @@
           :key="index"
         >
             <div class="float-layout">
-                <div class="card-image">
+                <div class="card-image" :class="value.on_sale !=0 ? '' : 'off-sale'">
                     <img :src="require(`../assets/images/${value.gambar}`)" :alt="value.nama"/>
                     <div class="card">
                         <div class="card-title">{{ value.nama }}</div>
+                        <span class="badge-oos" v-if="value.on_sale == 0">Habis</span>
                         <div class="card-desc">{{ value.deskripsi }}</div>
                         <div class="card-price">Rp{{ value.harga }}</div>
                     </div>
@@ -95,6 +96,13 @@ img {
   background-color: white;
   padding: 5px 0;
   font-weight: 600;
+}
+.badge-oos {
+  font-weight: 400;
+  border-radius: 10px;
+  padding: 5px 10px;  
+  font-size: 14px;
+  background-color: red;
 }
 /* div.card-image img {
   width: 30%;

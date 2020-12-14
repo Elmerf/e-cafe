@@ -7,10 +7,11 @@
                 :key="innerIndex"
             >
                 <div class="float-layout">
-                    <div class="card-image">
+                    <div class="card-image" :class="menu.on_sale !=0 ? '' : 'off-sale'">
                         <img :src="require(`../assets/images/${menu.gambar}`)" :alt="menu.nama"/>
                         <div class="card">
                             <div class="card-title">{{ menu.nama }}</div>
+                            <span class="badge-oos" v-if="menu.on_sale == 0">Habis</span>
                             <div class="card-desc">{{ menu.deskripsi }}</div>
                             <div class="card-price">Rp{{ menu.harga }}</div>
                         </div>
@@ -57,5 +58,7 @@ export default {
 .category {
   padding: 10px 5% 10px 5%;
 }
-
+.off-sale img{
+    opacity: 0.5;
+}
 </style>
