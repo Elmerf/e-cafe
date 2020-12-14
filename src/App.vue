@@ -1,8 +1,11 @@
 <template>
-  <div class="container">
-    <Navbar/>
-    <RecommendedItem/>
-    <MenuItem/>
+  <div class="page-container">
+    <div class="content-wrap">
+      <Navbar/>
+      <RecommendedItem/>
+      <MenuItem/>
+    </div>
+    <footer id="footer">Tim Rebahan &copy; 2020</footer>
   </div>
 </template>
 
@@ -33,5 +36,23 @@ export default {
 
 body {
   font-family: 'Comfortaa', cursive;
+}
+
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  padding-bottom: 2.5rem; 
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  padding: 10px;
+  text-align: center;
 }
 </style>
