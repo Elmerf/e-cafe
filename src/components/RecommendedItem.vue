@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 img {
   background-color: white;
   float: left;
@@ -64,7 +64,7 @@ img {
   
 }
 .card {
-  padding-left: 10px;
+  padding: 0 10px;
   background-color: white;
   color: black;
   min-height: 100%; 

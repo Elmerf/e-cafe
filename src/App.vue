@@ -2,10 +2,12 @@
   <div class="container">
     <Navbar/>
     <RecommendedItem/>
+    <MenuItem/>
   </div>
 </template>
 
 <script>
+import MenuItem from './components/MenuItem.vue'
 import Navbar from './components/Navbar'
 import RecommendedItem from './components/RecommendedItem'
 
@@ -14,6 +16,7 @@ export default {
   components: {
     Navbar,
     RecommendedItem,
+    MenuItem,
   }
 }
 </script>
