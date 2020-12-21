@@ -20,6 +20,7 @@ export default {
     Navbar,
     RecommendedItem,
     MenuItem,
+
   }
 }
 </script>

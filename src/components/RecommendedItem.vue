@@ -5,8 +5,11 @@
           v-for="(value, index) in values" 
           :key="index"
         >
-            <div class="float-layout">
-                <div class="card-image" :class="value.on_sale !=0 ? '' : 'off-sale'">
+            <div class="float-layout" :class="value.on_sale !=0 ? '' : 'off-sale'">
+                <div 
+                  class="card-image" 
+                  @click="showModal()"
+                >
                     <img :src="require(`../assets/images/${value.gambar}`)" :alt="value.nama"/>
                     <div class="card">
                         <div class="card-title">{{ value.nama }}</div>
@@ -27,6 +30,11 @@ export default {
         return {
             values: {}
         }
+    },
+    methods: {
+      showModal() {
+        this.modalOpen = !this.modalOpen
+      }
     },
     mounted() {
         this.axios.get("http://192.168.43.226:3000/menus/favorited").then((response) => {
