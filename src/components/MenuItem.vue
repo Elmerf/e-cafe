@@ -2,7 +2,7 @@
     <div class="menu-container">
         <div class="search-wrapper">
             <input type="text" placeholder="Cari menu yang kamu mau" v-model="search">
-            <button><i class="fa fa-search"></i></button>
+            <button @click="resetSearch"><i :class="search != '' ? 'fas fa-times' : 'fa fa-search'"></i></button>
         </div>
         <div class="wrapper" v-if="search == ''">
             <div v-for="(category, index) in categories" :key="index">
@@ -78,6 +78,9 @@ export default {
         menus(category) {
             return this.values
                 .filter(value => value.nama_kategori === category)
+        },
+        resetSearch() {
+            this.search = ''
         }
     }
 }
