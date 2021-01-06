@@ -20,7 +20,6 @@ export default {
     Navbar,
     RecommendedItem,
     MenuItem,
-
   }
 }
 </script>
@@ -32,11 +31,11 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background: whitesmoke;
 }
 
 body {
   font-family: 'Comfortaa', cursive;
+  background: whitesmoke;
 }
 
 .page-container {

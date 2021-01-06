@@ -12,7 +12,10 @@
                     :key="innerIndex"
                 >
                     <div class="float-layout" :class="menu.on_sale !=0 ? '' : 'off-sale'">
-                        <div class="card-image">
+                        <div 
+                            class="card-image"
+                            @click="showModal(menu)"
+                        >
                             <img :src="require(`../assets/images/${menu.gambar}`)" :alt="menu.nama"/>
                             <div class="card">
                                 <div class="card-title">{{ menu.nama }}</div>
@@ -23,6 +26,27 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="Object.keys(modalData).length !== 0">
+                    <Modal :show="openModal" v-on:closeModal="closeModal">
+                        <template v-slot:header>
+                        <h3>{{ modalData.nama }}</h3>
+                        </template>
+                        <template v-slot:body>
+                        <img :src="require(`../assets/images/${modalData.gambar}`)" :alt="modalData.nama"/>
+                        <h3>{{ modalData.harga }}</h3>
+                        </template>
+                        <template v-slot:footer>
+                        <div class="pilih-menu">
+                            <button class="minus" @click="minusMenu">-</button>
+                            <input type="text" size="2" readonly :value="count">
+                            <button class="add" @click="addMenu">+</button>
+                        </div>
+                        <div class="add-to-cart">
+                            <button class="addToCart" :disabled="isDisabled" id="countMenu" @click="addToCart">Tambah</button>
+                        </div>
+                        </template>
+                    </Modal>
+                </div>
             </div>
         </div>
         <div class="wrapper" v-else>
@@ -32,7 +56,10 @@
                     :key="index"
                 >
                 <div class="float-layout" :class="menu.on_sale !=0 ? '' : 'off-sale'">
-                    <div class="card-image">
+                    <div 
+                        class="card-image"
+                        @click="showModal(menu)"
+                    >
                         <img :src="require(`../assets/images/${menu.gambar}`)" :alt="menu.nama"/>
                         <div class="card">
                             <div class="card-title">{{ menu.nama }}</div>
@@ -42,6 +69,27 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div v-if="Object.keys(modalData).length !== 0">
+                    <Modal :show="openModal" v-on:closeModal="closeModal">
+                        <template v-slot:header>
+                        <h3>{{ modalData.nama }}</h3>
+                        </template>
+                        <template v-slot:body>
+                        <img :src="require(`../assets/images/${modalData.gambar}`)" :alt="modalData.nama"/>
+                        <h3>{{ modalData.harga }}</h3>
+                        </template>
+                        <template v-slot:footer>
+                        <div class="pilih-menu">
+                            <button class="minus" @click="minusMenu">-</button>
+                            <input type="text" size="2" readonly :value="count">
+                            <button class="add" @click="addMenu">+</button>
+                        </div>
+                        <div class="add-to-cart">
+                            <button class="addToCart" disabled id="countMenu" @click="addToCart">Tambah</button>
+                        </div>
+                        </template>
+                    </Modal>
+                </div> -->
             </div>
             <div v-if="!filteredList.length" style="text-align: center">Tidak Ada Hasil</div>
         </div>
@@ -49,10 +97,21 @@
 </template>
 
 <script>
+import Modal from './Modal'
+import carts from '../assets/data/carts'
+
 export default {
     name: 'MenuItem',
+    components: {
+      Modal,
+    },
     data() {
         return {
+            isDisabled: true,
+            count: 0,
+            totalHarga: 0,
+            openModal: false,
+            modalData: [],
             search: '',
             values: []
         }
@@ -81,6 +140,56 @@ export default {
         },
         resetSearch() {
             this.search = ''
+        },
+        showModal(value) {
+            this.modalData = value 
+            this.openModal = true
+        },
+        closeModal() {
+            let button = document.getElementById("countMenu")
+            button.textContent = "Tambah"
+            
+            this.isDisabled = true
+            this.openModal = false
+            this.count = 0
+        },
+        addMenu() {
+            let button = document.getElementById("countMenu")
+            let harga = this.modalData.harga
+
+            this.count++
+            this.totalHarga = harga * this.count
+            this.isDisabled = false
+            button.textContent = "Tambah - " + this.totalHarga
+
+            console.log(button)
+        },
+        minusMenu() {
+            let button = document.getElementById("countMenu")
+            let harga = this.modalData.harga
+
+            if(this.count != 0) {
+                this.count--
+            }
+
+            this.totalHarga = harga * this.count
+            button.textContent = "Tambah - " + this.totalHarga
+
+            if(this.count == 0) {
+                button.textContent = "Tambah"
+                this.isDisabled = true
+                this.totalHarga = 0
+            }
+        },
+        addToCart() {
+            carts.push({
+            id: this.modalData.id_menu,
+            nama: this.modalData.nama,
+            harga: this.modalData.harga,
+            jumlah: this.count,
+            totalHarga: this.totalHarga
+            })
+            this.closeModal()
         }
     }
 }

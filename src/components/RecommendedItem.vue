@@ -8,7 +8,7 @@
             <div class="float-layout" :class="value.on_sale !=0 ? '' : 'off-sale'">
                 <div 
                   class="card-image" 
-                  @click="showModal()"
+                  @click="showModal(value)"
                 >
                     <img :src="require(`../assets/images/${value.gambar}`)" :alt="value.nama"/>
                     <div class="card">
@@ -19,21 +19,99 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+        <div v-if="Object.keys(modalData).length !== 0">
+          <Modal :show="openModal" v-on:closeModal="closeModal">
+            <template v-slot:header>
+              <h3>{{ modalData.nama }}</h3>
+            </template>
+            <template v-slot:body>
+              <img :src="require(`../assets/images/${modalData.gambar}`)" :alt="modalData.nama"/>
+              <h3>{{ modalData.harga }}</h3>
+            </template>
+            <template v-slot:footer>
+              <div class="pilih-menu">
+                <button class="minus" @click="minusMenu">-</button>
+                <input type="text" size="2" readonly :value="count">
+                <button class="add" @click="addMenu">+</button>
+              </div>
+              <div class="add-to-cart">
+                <button class="addToCart" disabled id="count" @click="addToCart">Tambah</button>
+              </div>
+            </template>
+          </Modal>
+        </div>
     </div>
 </template>
 
 <script>
+import Modal from './Modal'
+import carts from '../assets/data/carts'
+
 export default {
     name: "RecommendedItem",
+    components: {
+      Modal,
+    },
     data() {
         return {
-            values: {}
+            count: 0,
+            totalHarga: 0,
+            openModal: false,
+            modalData: [],
+            values: []
         }
     },
     methods: {
-      showModal() {
-        this.modalOpen = !this.modalOpen
+      showModal(value) {
+        this.modalData = value 
+        this.openModal = true
+      },
+      closeModal() {
+        let button = document.getElementById("count")
+        button.textContent = "Tambah"
+        button.disabled = true
+
+        this.openModal = false
+        this.count = 0
+      },
+      addMenu() {
+        let button = document.getElementById("count")
+        let harga = this.modalData.harga
+
+        this.count++
+        this.totalHarga = harga * this.count
+        button.disabled = false
+        button.textContent = "Tambah - " + this.totalHarga
+
+        console.log(button)
+      },
+      minusMenu() {
+        let button = document.getElementById("count")
+        let harga = this.modalData.harga
+
+        if(this.count != 0) {
+          this.count--
+        }
+
+        this.totalHarga = harga * this.count
+        button.textContent = "Tambah - " + this.totalHarga
+
+        if(this.count == 0) {
+          button.textContent = "Tambah"
+          button.disabled = true
+          this.totalHarga = 0
+        }
+      },
+      addToCart() {
+        carts.push({
+          id: this.modalData.id_menu,
+          nama: this.modalData.nama,
+          harga: this.modalData.harga,
+          jumlah: this.count,
+          totalHarga: this.totalHarga
+          })
+        this.closeModal()
       }
     },
     mounted() {
@@ -56,7 +134,7 @@ img {
   margin: auto;
 }
 .container-recommended {
-  padding: 20px 5%;
+  padding: 10px 5%;
 }
 .recommended {
   padding: 0 5% 10px 5%;
@@ -112,10 +190,44 @@ img {
   font-size: 14px;
   background-color: red;
 }
-/* div.card-image img {
-  width: 30%;
-  height: auto;
+.pilih-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.modal-footer button {
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 5px;
+  font-size: 24px;
+}
+button.minus{
+  background: #6e6a6a;
+}
+button.add{
+  background: rgb(253,184,21);
+}
+.add-to-cart {
+  width: 80%;
+  margin: 0 auto;
+} 
+button.addToCart {
+  width: 100%;
   border-radius: 10px;
-} */
-
+  background: rgb(253,184,21);
+  color: black;
+  font-size: 16px;
+}
+button.addToCart:disabled {
+  background-color: rgba(238, 238, 238, 0.8);
+}
+.modal-footer input {
+  text-align: center;
+  font-size: 24px;
+  background:#f1f1f1;
+}
 </style>
