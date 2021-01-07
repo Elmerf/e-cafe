@@ -1,26 +1,15 @@
 <template>
-  <div class="page-container">
-    <div class="content-wrap">
-      <Navbar/>
-      <RecommendedItem/>
-      <MenuItem/>
+  <div id="app">
+    <div class="page-container">
+      <router-view/>
+      <footer id="footer">Tim Rebahan &copy; 2020</footer>
     </div>
-    <footer id="footer">Tim Rebahan &copy; 2020</footer>
   </div>
 </template>
 
 <script>
-import MenuItem from './components/MenuItem.vue'
-import Navbar from './components/Navbar'
-import RecommendedItem from './components/RecommendedItem'
-
 export default {
   name: 'App',
-  components: {
-    Navbar,
-    RecommendedItem,
-    MenuItem,
-  }
 }
 </script>
 

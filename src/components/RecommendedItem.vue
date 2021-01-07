@@ -35,8 +35,8 @@
                 <input type="text" size="2" readonly :value="count">
                 <button class="add" @click="addMenu">+</button>
               </div>
-              <div class="add-to-cart">
-                <button class="addToCart" disabled id="count" @click="addToCart">Tambah</button>
+              <div id="add-to-cart">
+                <button class="addToCart" :disabled="isDisabled" id="count" @click="addToCart">Tambah</button>
               </div>
             </template>
           </Modal>
@@ -55,6 +55,8 @@ export default {
     },
     data() {
         return {
+            isUpdated: false,
+            isDisabled: true,
             count: 0,
             totalHarga: 0,
             openModal: false,
@@ -64,12 +66,35 @@ export default {
     },
     methods: {
       showModal(value) {
+        let button = document.getElementsByClassName("addToCart")[0]
         this.modalData = value 
         this.openModal = true
+
+        if(carts.length != 0) {
+          let filteredMenu = carts
+            .filter(cart => cart.id === this.modalData.id_menu && cart.jumlah > 0)
+          
+          if(filteredMenu[0].jumlah > 0) {
+            this.count = filteredMenu[0].jumlah
+            this.isDisabled = false
+
+            button.textContent = "Update - " + this.count *  filteredMenu[0].harga
+            button.disabled = false
+            button.classList.remove("remove")
+
+            this.isUpdated = true
+          }
+          else {
+            this.count = 0
+            this.isUpdated = false
+
+            button.textContent = "Tambah"
+          }
+        }
       },
       closeModal() {
         let button = document.getElementById("count")
-        button.textContent = "Tambah"
+        button.innerHTML = "Tambah"
         button.disabled = true
 
         this.openModal = false
@@ -82,9 +107,14 @@ export default {
         this.count++
         this.totalHarga = harga * this.count
         button.disabled = false
-        button.textContent = "Tambah - " + this.totalHarga
 
-        console.log(button)
+        if(this.isUpdated) {   
+          button.innerHTML = "Update - " + this.totalHarga
+        }
+        else {
+          button.innerHTML = "Tambah - " + this.totalHarga
+        }
+        button.classList.remove("remove")
       },
       minusMenu() {
         let button = document.getElementById("count")
@@ -95,22 +125,41 @@ export default {
         }
 
         this.totalHarga = harga * this.count
-        button.textContent = "Tambah - " + this.totalHarga
 
-        if(this.count == 0) {
-          button.textContent = "Tambah"
+        if(this.isUpdated) {   
+          button.innerHTML = "Update - " + this.totalHarga
+        }
+        else {
+          button.innerHTML = "Tambah - " + this.totalHarga
+        }
+
+        if(this.count == 0 && this.isUpdated) {
+          button.innerHTML = "Hapus dari Keranjang"
+          button.classList.add("remove")
+        } 
+        else  if(this.count == 0) {
+          button.innerHTML = "Tambah"
           button.disabled = true
           this.totalHarga = 0
         }
       },
       addToCart() {
-        carts.push({
-          id: this.modalData.id_menu,
-          nama: this.modalData.nama,
-          harga: this.modalData.harga,
-          jumlah: this.count,
-          totalHarga: this.totalHarga
+        if(this.isUpdated) {
+          let index = carts.findIndex((obj => obj.id == this.modalData.id_menu))
+          carts[index].jumlah = this.count
+
+          this.isUpdated = false
+        }
+        else {
+          carts.push({
+            id: this.modalData.id_menu,
+            nama: this.modalData.nama,
+            harga: this.modalData.harga,
+            jumlah: this.count,
+            totalHarga: this.totalHarga
           })
+        }
+    
         this.closeModal()
       }
     },
@@ -211,7 +260,7 @@ button.minus{
 button.add{
   background: rgb(253,184,21);
 }
-.add-to-cart {
+#add-to-cart {
   width: 80%;
   margin: 0 auto;
 } 
@@ -221,6 +270,10 @@ button.addToCart {
   background: rgb(253,184,21);
   color: black;
   font-size: 16px;
+}
+button.remove {
+  background: red;
+  color: white;
 }
 button.addToCart:disabled {
   background-color: rgba(238, 238, 238, 0.8);

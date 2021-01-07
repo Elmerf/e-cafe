@@ -41,7 +41,7 @@
                             <input type="text" size="2" readonly :value="count">
                             <button class="add" @click="addMenu">+</button>
                         </div>
-                        <div class="add-to-cart">
+                        <div id="add-to-cart">
                             <button class="addToCart" :disabled="isDisabled" id="countMenu" @click="addToCart">Tambah</button>
                         </div>
                         </template>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div v-if="Object.keys(modalData).length !== 0">
+                <div v-if="Object.keys(modalData).length !== 0">
                     <Modal :show="openModal" v-on:closeModal="closeModal">
                         <template v-slot:header>
                         <h3>{{ modalData.nama }}</h3>
@@ -84,12 +84,12 @@
                             <input type="text" size="2" readonly :value="count">
                             <button class="add" @click="addMenu">+</button>
                         </div>
-                        <div class="add-to-cart">
+                        <div id="add-to-cart">
                             <button class="addToCart" disabled id="countMenu" @click="addToCart">Tambah</button>
                         </div>
                         </template>
                     </Modal>
-                </div> -->
+                </div>
             </div>
             <div v-if="!filteredList.length" style="text-align: center">Tidak Ada Hasil</div>
         </div>
@@ -142,12 +142,29 @@ export default {
             this.search = ''
         },
         showModal(value) {
+            let button = document.getElementsByClassName("addToCart")[0]
             this.modalData = value 
             this.openModal = true
+
+            if(carts.length != 0) {
+                let filteredMenu = carts
+                    .filter(cart => cart.id === this.modalData.id_menu && cart.jumlah > 0)
+            
+                if(filteredMenu[0].jumlah > 0) {
+                    this.count = filteredMenu[0].jumlah
+                    this.isDisabled = false
+
+                    button.textContent = "Update - " + this.count *  filteredMenu[0].harga
+                    button.disabled = false
+                }
+                else {
+                    this.count = 0
+                }
+            }
         },
         closeModal() {
             let button = document.getElementById("countMenu")
-            button.textContent = "Tambah"
+            button.innerHTML = "Tambah"
             
             this.isDisabled = true
             this.openModal = false
@@ -160,7 +177,7 @@ export default {
             this.count++
             this.totalHarga = harga * this.count
             this.isDisabled = false
-            button.textContent = "Tambah - " + this.totalHarga
+            button.innerHTML = "Tambah - " + this.totalHarga
 
             console.log(button)
         },
@@ -173,10 +190,10 @@ export default {
             }
 
             this.totalHarga = harga * this.count
-            button.textContent = "Tambah - " + this.totalHarga
+            button.innerHTML = "Tambah - " + this.totalHarga
 
             if(this.count == 0) {
-                button.textContent = "Tambah"
+                button.innerHTML = "Tambah"
                 this.isDisabled = true
                 this.totalHarga = 0
             }
