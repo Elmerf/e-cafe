@@ -55,6 +55,7 @@ export default {
     },
     data() {
         return {
+            isRemoved: false,
             isUpdated: false,
             isDisabled: true,
             count: 0,
@@ -66,7 +67,7 @@ export default {
     },
     methods: {
       showModal(value) {
-        let button = document.getElementsByClassName("addToCart")[0]
+        let button = document.getElementById("count")
         this.modalData = value 
         this.openModal = true
 
@@ -133,9 +134,11 @@ export default {
           button.innerHTML = "Tambah - " + this.totalHarga
         }
 
-        if(this.count == 0 && this.isUpdated) {
+        if(this.count == 0 && this.isUpdated || this.isRemoved) {
           button.innerHTML = "Hapus dari Keranjang"
           button.classList.add("remove")
+          this.isRemoved = true
+          this.isUpdated = false
         } 
         else  if(this.count == 0) {
           button.innerHTML = "Tambah"
@@ -149,6 +152,11 @@ export default {
           carts[index].jumlah = this.count
 
           this.isUpdated = false
+        }
+        else if(this.isRemoved) {
+          let index = carts.findIndex((obj => obj.id == this.modalData.id_menu))
+          
+          carts.splice(index, 1)
         }
         else {
           carts.push({
@@ -164,9 +172,9 @@ export default {
       }
     },
     mounted() {
-        this.axios.get("http://192.168.43.226:3000/menus/favorited").then((response) => {
-            this.values = response.data.values
-        })
+      this.axios.get("http://192.168.43.226:3000/menus/favorited").then((response) => {
+          this.values = response.data.values
+      })
     },
 }
 </script>
