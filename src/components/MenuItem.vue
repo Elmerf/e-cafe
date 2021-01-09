@@ -85,7 +85,7 @@
                             <button class="add" @click="addMenu">+</button>
                         </div>
                         <div id="add-to-cart">
-                            <button class="addToCart" disabled id="countMenu" @click="addToCart">Tambah</button>
+                            <button class="addToCart" :disabled="isDisabled" id="countMenu" @click="addToCart">Tambah</button>
                         </div>
                         </template>
                     </Modal>
@@ -107,6 +107,8 @@ export default {
     },
     data() {
         return {
+            isRemoved: false,
+            isUpdated: false,
             isDisabled: true,
             count: 0,
             totalHarga: 0,
@@ -142,31 +144,37 @@ export default {
             this.search = ''
         },
         showModal(value) {
-            let button = document.getElementsByClassName("addToCart")[0]
+            let button = document.getElementById("countMenu")
             this.modalData = value 
             this.openModal = true
 
             if(carts.length != 0) {
-                let filteredMenu = carts
-                    .filter(cart => cart.id === this.modalData.id_menu && cart.jumlah > 0)
+            let filteredMenu = carts
+                .filter(cart => cart.id === this.modalData.id_menu && cart.jumlah > 0)
             
-                if(filteredMenu[0].jumlah > 0) {
-                    this.count = filteredMenu[0].jumlah
-                    this.isDisabled = false
+            if(filteredMenu[0].jumlah > 0) {
+                this.count = filteredMenu[0].jumlah
+                this.isDisabled = false
 
-                    button.textContent = "Update - " + this.count *  filteredMenu[0].harga
-                    button.disabled = false
-                }
-                else {
-                    this.count = 0
-                }
+                button.textContent = "Update - " + this.count *  filteredMenu[0].harga
+                button.disabled = false
+                button.classList.remove("remove")
+
+                this.isUpdated = true
+            }
+            else {
+                this.count = 0
+                this.isUpdated = false
+
+                button.textContent = "Tambah"
+            }
             }
         },
         closeModal() {
             let button = document.getElementById("countMenu")
             button.innerHTML = "Tambah"
-            
-            this.isDisabled = true
+            button.disabled = true
+
             this.openModal = false
             this.count = 0
         },
@@ -176,10 +184,15 @@ export default {
 
             this.count++
             this.totalHarga = harga * this.count
-            this.isDisabled = false
-            button.innerHTML = "Tambah - " + this.totalHarga
+            button.disabled = false
 
-            console.log(button)
+            if(this.isUpdated) {   
+                button.innerHTML = "Update - " + this.totalHarga
+            }
+            else {
+                button.innerHTML = "Tambah - " + this.totalHarga
+            }
+            button.classList.remove("remove")
         },
         minusMenu() {
             let button = document.getElementById("countMenu")
@@ -190,22 +203,49 @@ export default {
             }
 
             this.totalHarga = harga * this.count
-            button.innerHTML = "Tambah - " + this.totalHarga
 
-            if(this.count == 0) {
+            if(this.isUpdated) {   
+                button.innerHTML = "Update - " + this.totalHarga
+            }
+            else {
+                button.innerHTML = "Tambah - " + this.totalHarga
+            }
+
+            if(this.count == 0 && this.isUpdated || this.isRemoved) {
+                button.innerHTML = "Hapus dari Keranjang"
+                button.classList.add("remove")
+                this.isRemoved = true
+                this.isUpdated = false
+            } 
+            else  if(this.count == 0) {
                 button.innerHTML = "Tambah"
-                this.isDisabled = true
+                button.disabled = true
                 this.totalHarga = 0
             }
         },
         addToCart() {
-            carts.push({
-            id: this.modalData.id_menu,
-            nama: this.modalData.nama,
-            harga: this.modalData.harga,
-            jumlah: this.count,
-            totalHarga: this.totalHarga
-            })
+            if(this.isUpdated) {
+                let index = carts.findIndex((obj => obj.id == this.modalData.id_menu))
+                carts[index].jumlah = this.count
+                carts[index].totalHarga = this.totalHarga
+
+                this.isUpdated = false
+            }
+            else if(this.isRemoved) {
+                let index = carts.findIndex((obj => obj.id == this.modalData.id_menu))
+                
+                carts.splice(index, 1)
+            }
+            else {
+                carts.push({
+                    id: this.modalData.id_menu,
+                    nama: this.modalData.nama,
+                    harga: this.modalData.harga,
+                    jumlah: this.count,
+                    totalHarga: this.totalHarga
+                })
+            }
+        
             this.closeModal()
         }
     }

@@ -36,7 +36,7 @@
                 <button class="add" @click="addMenu">+</button>
               </div>
               <div id="add-to-cart">
-                <button class="addToCart" :disabled="isDisabled" id="count" @click="addToCart">Tambah</button>
+                <button class="addToCart" disabled id="count" @click="addToCart">Tambah</button>
               </div>
             </template>
           </Modal>
@@ -150,6 +150,7 @@ export default {
         if(this.isUpdated) {
           let index = carts.findIndex((obj => obj.id == this.modalData.id_menu))
           carts[index].jumlah = this.count
+          carts[index].totalHarga = this.totalHarga
 
           this.isUpdated = false
         }

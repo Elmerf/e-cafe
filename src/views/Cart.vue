@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 import carts from '../assets/data/carts'
 
 export default {
@@ -45,7 +46,7 @@ export default {
         return {
             keranjang: carts,
             noMeja: 0,
-            namaPemesan: ''
+            namaPemesan: '',
         }
     },
     mounted() {
@@ -53,8 +54,6 @@ export default {
         const urlParams = new URLSearchParams(queryString)
         const noMeja = urlParams.get('no_meja')
         this.noMeja = noMeja
-
-        console.log(carts)
     },
     computed: {
         subTotal() {
@@ -69,8 +68,52 @@ export default {
                 alert("Masukkan Nama")
             }
             else {
-                alert("Transaksi Diproses")
+                this.axios({
+                    method: 'post',
+                    url: 'http://192.168.43.226:3000/pemesan',
+                    data: qs.stringify({
+                        pemesan: this.namaPemesan,
+                        no_meja: this.noMeja
+                    }),
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+                    }
+                })
+                .then((response) => {
+                    if(response.status === 200) {
+                        this.sendData()
+                    }
+                }, (error) => {
+                    console.log(error);
+                })
             }
+        },
+        sendData() {
+            let totalPesanan = this.subTotal
+            let idPesanan = 
+                `${new Date().getFullYear()}${Math.floor(Math.random() * 1000) + 1}${this.noMeja}`
+            
+            this.axios({
+                    method: 'post',
+                    url: 'http://192.168.43.226:3000/pemesan/pesanan',
+                    data: qs.stringify({
+                        id_pesanan: idPesanan,
+                        no_meja: this.noMeja,
+                        total_pesanan: totalPesanan,
+                        status: 0,
+                        pesanan: this.keranjang
+                    }),
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+                    }
+            })
+            .then((response) => {
+                if(response.status === 200) {
+                    alert("Transaksi Berhasil! Silahkan bayar ke Kasir")
+                }
+            }, (error) => {
+                console.log(error)
+            })  
         }
     }
 }
